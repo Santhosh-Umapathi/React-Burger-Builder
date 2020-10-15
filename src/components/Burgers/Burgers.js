@@ -10,7 +10,7 @@ const Burgers = (props) =>
 	const ingredients = props.ingredients
 
 	//Creating Array with keys as type and values and no.of ingredients
-	const newIngredients = Object.keys(ingredients)
+	let newIngredients = Object.keys(ingredients)
 		.map(item =>
 		{
 			return [...Array(ingredients[item])]
@@ -19,7 +19,16 @@ const Burgers = (props) =>
 					return <BurgerIngredients key={item + index} type={item}/>
 				})
 		})
+		// Flattens the inner array to single array
+		.reduce((prev, cur) =>
+		{
+			return prev.concat(cur)
+		})
 
+	if (newIngredients.length === 0)
+	{
+		newIngredients = <p>Add some Ingredients !!</p>
+	}
 
 
 
