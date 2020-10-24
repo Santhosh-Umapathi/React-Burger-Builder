@@ -1,16 +1,25 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Aux from '../../hoc/Aux'
 import Button from '../UI/Button/Button'
 
-const OrderSummary = (props) =>
+class OrderSummary extends Component
 {
 
-	const summary = Object.keys(props.ingredients)
+	
+
+	componentDidUpdate()
+	{
+		console.log("Order sum - comp did up")
+	}
+
+	render()
+	{
+		const summary = Object.keys(this.props.ingredients)
 		.map(item =>
 		{
 			return <li>
 				<span style={{ textTransform: 'capitalize' }}>
-					{item}: {props.ingredients[item]}
+					{item}: {this.props.ingredients[item]}
 				</span>
 			</li>
 		})
@@ -22,26 +31,29 @@ const OrderSummary = (props) =>
 				{summary}	
 			</ul>
 
-			<p><strong>Total Price: ${props.price.toFixed(2)}</strong></p>
+			<p><strong>Total Price: ${this.props.price.toFixed(2)}</strong></p>
 
 			<p>Continue to checkout ?</p>
 
 			<Button
 				btnType="Danger"
-				clicked = {props.cancelled}
+				clicked = {this.props.cancelled}
 			>
 				CANCEL
 			</Button>
 
 			<Button
 				btnType="Success"
-				clicked = {props.purchased}
+				clicked = {this.props.purchased}
 			>
 				CONTINUE
 			</Button>
 			
 		</Aux>
 	)
+	}
+
+	
 }
 
 export default OrderSummary
