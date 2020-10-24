@@ -18,3 +18,17 @@
 {
 	height: 100%;
 }
+
+.Logo
+{
+	height: 80%;
+}
+
+/*Mobile*/
+@media (max-width: 499px)
+{
+	.DesktopOnly
+	{
+		display: none; /*Hide Tool bar on mobile*/
+	}
+}
