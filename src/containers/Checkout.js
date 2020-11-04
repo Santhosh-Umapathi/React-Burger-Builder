@@ -1,15 +1,14 @@
 import { info } from 'autoprefixer'
 import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
 import CheckoutSummary from '../components/Order/CheckoutSummary'
-
+import ContactData from '../components/Order/ContactData/ContactData'
 
 class Checkout extends Component
 {
 	state = {
-		ingredients:{salad: 1,
-		cheese: 0,
-		meat: 1,
-		bacon:1}
+		ingredients: null,
+		price:0
 	}
 
 	cancelHandler = () =>
@@ -22,20 +21,28 @@ class Checkout extends Component
 		this.props.history.replace("/checkout/contact-form")
 	}
 
-	componentDidMount()
+	componentWillMount()
 	{
 
 		const query = new URLSearchParams(this.props.location.search)
 		const ingredients = {}
+		let price
 
 		for (let params of query.entries())
 		{
-			ingredients[params[0]] = +params[1] 
+			if (params[0] === "price")
+			{
+				price = params[1]
+			}
+			else
+			{
+				ingredients[params[0]] = +params[1]
+			}
+			
 		}
-		console.log("ING=>",ingredients)
 
 		
-		this.setState({ingredients:ingredients})
+		this.setState({ingredients:ingredients, price: price})
 		
 	}
 	
@@ -48,6 +55,11 @@ class Checkout extends Component
 					ingredients={this.state.ingredients}
 					cancelled={this.cancelHandler}
 					continued = {this.continueHandler}
+				/>
+
+				<Route path={this.props.match.url + "/contact-form"} //component={ContactData}
+					render={(props) => (<ContactData state={this.state} {...props}/>)}
+				
 				/>
 			</div>
 		)

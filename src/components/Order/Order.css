@@ -1,0 +1,12 @@
+.Order
+{
+	width: 80%;
+	margin: 20px;
+	display: block;
+	box-shadow: 0 2px 3px orange;
+	border: 1px dashed orange;
+	border-radius: 10px;
+	box-sizing: border-box;
+	padding: 20px;
+
+}
