@@ -5,6 +5,8 @@ import classes from './ContactData.css'
 import axios from '../../../axios'
 import Spinner from '../../UI/Loading/Loading'
 import Input from '../../UI/Input/Input'
+import { connect } from 'react-redux'
+
 
 
 class ContactData extends Component
@@ -121,8 +123,8 @@ class ContactData extends Component
 		this.setState({loading:true})
 
 		const orderData = {
-				ingredients: this.props.state.ingredients,
-				price: this.props.state.price,
+				ingredients: this.props.ings,
+				price: this.props.price,
 				orderData:newObject
 			}
 	
@@ -168,10 +170,6 @@ class ContactData extends Component
 		secondClone.value = event.target.value
 		secondClone.isValid = this.checkValidity(secondClone.value, secondClone.validation)
 		secondClone.touched = true
-
-		
-		
-
 
 		firstClone[id] = secondClone
 
@@ -234,4 +232,12 @@ class ContactData extends Component
 	}
 }
 
-export default ContactData;
+const mapStateToProps = (state) =>
+{
+	return {
+		ings: state.ingredients,
+		price:state.totalPrice
+	}
+}
+
+export default connect(mapStateToProps)(ContactData);
