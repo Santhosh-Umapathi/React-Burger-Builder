@@ -6,12 +6,24 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { BrowserRouter } from 'react-router-dom'
 
-import { createStore } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
+//Reducers
+import burgerReducer from './store/reducers/burgerReducer'
+import orderReducer from './store/reducers/orderReducer'
+import thunk from 'redux-thunk';
 
-import reducer from './store/reducer'
 
-const store = createStore(reducer)
+
+const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
+
+const rootReducer = combineReducers({
+	brg: burgerReducer,
+	ord: orderReducer
+})
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
 const app = (
 	<Provider store = {store}>

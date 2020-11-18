@@ -7,7 +7,9 @@ import classes from './Burgers.css'
 const Burgers = (props) =>
 {
 
+
 	const ingredients = props.ingredients
+
 
 	//Creating Array with keys as type and values and no.of ingredients
 	let newIngredients = Object.keys(ingredients)

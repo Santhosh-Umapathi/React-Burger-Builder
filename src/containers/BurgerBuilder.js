@@ -11,8 +11,7 @@ import Loading from '../components/UI/Loading/Loading';
 import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
 
-import * as actionTypes from '../store/action'
-
+import * as actions from '../store/actions/actions'
 
 
 class BurgerBuilder extends Component
@@ -23,17 +22,14 @@ class BurgerBuilder extends Component
 	state =
 	{
 		purchasing: false,
-		loading: false,
-		error:null
 	}
-	
 	
 	componentDidMount()
 	{
-		axios.get('https://react-burger-builder-49c67.firebaseio.com/ingredients.json')
-			.then(res => this.setState({ ingredients: res.data }))
-			.catch(err => this.setState({ error: err }))
+		this.props.initIngredients()
 	}
+	
+	
 	
 	
 
@@ -64,21 +60,18 @@ class BurgerBuilder extends Component
 	render()
 	{
 
-		const disabledInfo = { ...this.props.ings }
-		
-		for(let key in disabledInfo)
-		{
-		  disabledInfo[key] = disabledInfo[key] <= 0 // sets salad:true, meat:false etc
-		}
-
-		
-		let orderSummary
+		const disabledInfo = {...this.props.ings};
+        for ( let key in disabledInfo ) {
+            disabledInfo[key] = disabledInfo[key] <= 0
+        }
+        let orderSummary = null;
 		
 		
-		let burger = this.state.error ? <p style={{textAlign:"center"}}>Failed to load ingredients</p> : <Loading />
+		let burger = this.props.err ? <p style={{textAlign:"center"}}>Failed to load ingredients</p> : <Loading />
 
 		if (this.props.ings)
 		{
+			console.log("ings=>",this.props.ings)
 			burger = <Aux>
 			<Burgers ingredients={this.props.ings}/>
 			<BuildControls
@@ -97,17 +90,10 @@ class BurgerBuilder extends Component
 			cancelled={this.purchasingCancelHandler}
 			price = {this.props.price}
 			/>
-			
-			if (this.state.loading)
-			{
-				orderSummary = <Loading />
-			}
-			
+				
 		}
 		
-			
-
-			
+	
 		return (
 			<Aux>
 				<Modal showModal = {this.state.purchasing} closeModal = {this.purchasingCancelHandler}>
@@ -122,20 +108,20 @@ class BurgerBuilder extends Component
 const mapStateToProps = (state) =>
 {
 	return {
-		ings: state.ingredients,
-		price:state.totalPrice
+		ings: state.brg.ingredients,
+		price: state.brg.totalPrice,
+		err: state.brg.error
 	}
 }
 	
 const mapDispatchToProps = (dispatch) =>
 {
 	return {
-		addIngredient: (name) => dispatch({ type: actionTypes.ADD_INGREDIENT, payload:name}),
-		removeIngredient: (name) => dispatch({type: actionTypes.REMOVE_INGREDIENT , payload:name})
-
+		addIngredient: (name) => dispatch(actions.addIngredient(name)),
+		removeIngredient: (name) => dispatch(actions.removeIngredient(name)),
+		initIngredients: () => dispatch(actions.initIngredients())
 	}
-	}
-
+}
 
 
 

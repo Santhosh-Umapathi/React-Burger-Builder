@@ -37,6 +37,7 @@ const withErrorHandler = (WrappedComponent, axios) =>
 			//Clean up axios interceptors to avoid memory leak
 
 			console.log("will unmount", this.reqInterceptor, this.resInterceptor)
+			
 			axios.interceptors.request.eject(this.reqInterceptor)
 			axios.interceptors.response.eject(this.resInterceptor)
 

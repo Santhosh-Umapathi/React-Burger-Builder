@@ -1,7 +1,6 @@
-import { info } from 'autoprefixer'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route , Redirect} from 'react-router-dom'
 import CheckoutSummary from '../components/Order/CheckoutSummary'
 import ContactData from '../components/Order/ContactData/ContactData'
 
@@ -23,27 +22,32 @@ class Checkout extends Component
 
 	render()
 	{
-		return (
-			<div>
-				<CheckoutSummary
-					ingredients={this.props.ingredients}
-					cancelled={this.cancelHandler}
-					continued = {this.continueHandler}
-				/>
+		// let summary = Redirect to="/" />
+		
+		// if (this.props.ings)
+		// {
+		// 	summary = 
+		// }
+		
+		return <div>
+		<CheckoutSummary
+			ingredients={this.props.ingredients}
+			cancelled={this.cancelHandler}
+			continued = {this.continueHandler}
+		/>
 
-				<Route path={this.props.match.url + "/contact-form"} //component={ContactData}
-					component={ContactData}
-				
-				/>
-			</div>
-		)
+		<Route path={this.props.match.url + "/contact-form"} //component={ContactData}
+			component={ContactData}
+		
+		/>
+	</div>
 	}
 }
 
 const mapStateToProps = (state) =>
 {
 	return {
-		ingredients: state.ingredients,
+		ingredients: state.brg.ingredients,
 	}
 } 
 
