@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import Button from '../../UI/Button/Button'
-
+import Input from '../../UI/Input/Input'
 import classes from './ContactData.css'
 import axios from '../../../axios'
 import Spinner from '../../UI/Loading/Loading'
-import Input from '../../UI/Input/Input'
 import { connect } from 'react-redux'
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
 
@@ -97,7 +96,7 @@ class ContactData extends Component
 					{ value: 'cheapest', displayValue: 'Cheapest' },
 				]
 			},
-			value: '',
+			value: 'fastest',
 			validation:
 				{
 					required:false
@@ -152,7 +151,12 @@ class ContactData extends Component
 		if (rules.maxLength)
 		{
 			isValid = value.length <= rules.maxLength && isValid
+		}
 
+		if (rules.isEmail)
+		{
+			const pattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+			isValid = pattern.test(value) && isValid
 		}
 		
 		return isValid;
@@ -246,4 +250,4 @@ const mapDispatchToProps = dispatch =>
 	}
 	}
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios)); 

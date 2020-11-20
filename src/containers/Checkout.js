@@ -22,25 +22,36 @@ class Checkout extends Component
 
 	render()
 	{
-		// let summary = Redirect to="/" />
+		// let summary = <Redirect to="/" />
 		
 		// if (this.props.ings)
 		// {
-		// 	summary = 
-		// }
+		// 	summary = <div>
+		// 	<CheckoutSummary
+		// 		ingredients={this.props.ingredients}
+		// 		cancelled={this.cancelHandler}
+		// 		continued = {this.continueHandler}
+		// 	/>
+	
+		// 	<Route path={this.props.match.url + "/contact-form"} //component={ContactData}
+		// 		component={ContactData}
+			
+		// 	/>
+		// </div>
+		// } 
 		
 		return <div>
-		<CheckoutSummary
-			ingredients={this.props.ingredients}
-			cancelled={this.cancelHandler}
-			continued = {this.continueHandler}
-		/>
-
-		<Route path={this.props.match.url + "/contact-form"} //component={ContactData}
-			component={ContactData}
-		
-		/>
-	</div>
+		 	<CheckoutSummary
+				ingredients={this.props.ingredients}
+				cancelled={this.cancelHandler}
+				continued = {this.continueHandler}
+			/>
+	
+			<Route path={this.props.match.url + "/contact-form"} //component={ContactData}
+				component={ContactData}
+			
+			/>
+		</div>
 	}
 }
 

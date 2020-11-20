@@ -1,0 +1,24 @@
+.FormDiv
+{
+	margin: 20px auto;
+	text-align: center;
+	width: 80%;
+	border: 1px solid green;
+	box-shadow: 0 2px 3px green;
+	padding: 10px;
+	box-sizing: border-box;
+	border-radius: 5px;
+
+}
+
+.Input
+{
+	display: block;
+}
+
+@media (min-width: 600px)
+{
+	.FormDiv{
+		width: 500px;
+	}
+}
