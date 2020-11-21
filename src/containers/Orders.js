@@ -3,6 +3,7 @@ import Order from '../components/Order/Order';
 import axios from '../axios'
 
 import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler'
+import { connect } from 'react-redux';
 
 class Orders extends Component
 {
@@ -14,7 +15,7 @@ class Orders extends Component
 
 	componentDidMount()
 	{
-		axios.get('/orders.json')
+		axios.get('/orders.json?auth='+this.props.token)
 			.then(res => {
 				const fetchedOrders = []
 				for (let key in res.data)
@@ -26,11 +27,7 @@ class Orders extends Component
 				}
 			this.setState({loading:false, orders:fetchedOrders})
 			})
-			.catch(err =>
-			{
-				this.setState({loading:false})
-
-			})
+			.catch(err =>this.setState({loading:false}))
 	}
 	
 	render()
@@ -51,4 +48,14 @@ class Orders extends Component
 	}
 }
 
-export default withErrorHandler(Orders, axios);
+const mapStateToProps = (state) =>
+{
+	return {
+		token: state.auth.token,
+		
+	}
+}
+	
+
+
+export default connect(mapStateToProps)(withErrorHandler(Orders, axios));
