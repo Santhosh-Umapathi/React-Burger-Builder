@@ -28,6 +28,11 @@ export const authFail = (error) =>
 
 export const authLogout = () =>
 {
+	localStorage.removeItem("token");
+	localStorage.removeItem("expirationDate");
+	localStorage.removeItem("userId");
+
+
 	return {
 		type: actionTypes.AUTH_LOGOUT,
 	}
@@ -50,10 +55,20 @@ export const authenticate = (email, password, isSignup) =>
 		}
 		const ApiKey = "AIzaSyDQhC1ur5RHMkOyd1XvJObpQ_-iU2Y4hXw"
 		const signUpUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+ApiKey
-		const signInUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="+ApiKey
+		const signInUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + ApiKey
+		
+		
+
 
 		axios.post(isSignup ? signUpUrl : signInUrl, postData)
-			.then(resp => {
+			.then(resp =>
+			{
+				const expirationDate = new Date(new Date().getTime() + resp.data.expiresIn * 1000)
+				localStorage.setItem("token", resp.data.idToken);
+				localStorage.setItem("expirationDate", expirationDate);
+				localStorage.setItem("userId", resp.data.localId);
+
+
 				dispatch(authSuccess(resp.data))
 				dispatch(checkExpiration(resp.data.expiresIn))
 			})
@@ -70,5 +85,36 @@ export const checkExpiration = (expirationTime) =>
 		{
 			dispatch(authLogout())
 		}, expirationTime * 1000);
+	}
+}
+
+export const authCheckState = () =>
+{
+	return dispatch =>
+	{
+		const token = localStorage.getItem("token")
+		const userId = localStorage.getItem("userId")
+		const expirationDate = new Date(localStorage.getItem("expirationDate"))
+
+		if (!token)
+		{
+			dispatch(authLogout())
+		}
+		else
+		{
+			if (expirationDate < new Date())
+			{
+				dispatch(authLogout())
+			}
+			else
+			{
+				const data = {
+					idToken:token,
+					localId:userId
+				}
+				dispatch(authSuccess(data))
+				dispatch(checkExpiration(new Date(expirationDate.getTime() - new Date().getTime())/1000))
+			}			
+		}			
 	}
 }

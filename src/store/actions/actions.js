@@ -9,5 +9,7 @@ export {
 } from './orderActions'
 
 export {
-	authenticate
+	authenticate,
+	authLogout,
+	authCheckState
 } from './authActions'

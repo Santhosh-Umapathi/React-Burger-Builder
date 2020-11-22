@@ -6,6 +6,7 @@ import classes from './Auth.css'
 import * as actions from '../store/actions/actions'
 
 import Spinner from '../components/UI/Loading/Loading'
+import { Redirect } from 'react-router-dom'
 
 
 
@@ -126,6 +127,17 @@ class Auth extends Component
 	render()
 	{
 		let formElementArray = []
+		let redirect = null
+
+		if (this.props.isAuthenticated && this.props.totalPrice === 4)
+		{
+			redirect = <Redirect to = '/' />
+		}
+
+		if (this.props.isAuthenticated && this.props.totalPrice !== 4)
+		{
+			redirect = <Redirect to = '/checkout' />
+		}
 
 		for (let key in this.state.orderForm)
 		{
@@ -164,6 +176,7 @@ class Auth extends Component
 
 		return (
 			<div className={classes.FormDiv}>
+				{redirect}
 				<h4>Login</h4>
 				{errorMessage}
 				<form onSubmit = {this.submitHandler}>
@@ -188,6 +201,8 @@ const mapStateToProps = (state) =>
 	return {
 		loading: state.auth.loading,
 		error: state.auth.error,
+		isAuthenticated: state.auth.token,
+		totalPrice: state.brg.totalPrice
 
 		
 	}

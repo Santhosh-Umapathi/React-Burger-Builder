@@ -11,11 +11,14 @@ const NavigationItems = (props) =>
 	const state = useSelector(state => state.auth)
 	const dispatch = useDispatch()
 
-
 	return (
 		<ul className = {classes.NavigationItems}>
-			<NavigationItem link = "/" active>Burger Builder</NavigationItem>
-			<NavigationItem link = "/orders">Orders</NavigationItem>
+			<NavigationItem link="/" active>Burger Builder</NavigationItem>
+			
+			{state.token
+				? <NavigationItem link="/orders">Orders</NavigationItem>
+				: null
+			}
 
 			{state.token
 				? <NavigationItem link="/logout">Logout</NavigationItem>
