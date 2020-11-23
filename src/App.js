@@ -1,13 +1,28 @@
 import React, { Component } from 'react';
 import Layout from './components/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder';
-import Checkout from './containers/Checkout';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import Orders from './containers/Orders';
-import Auth from './containers/Auth';
 import Logout from './containers/Logout';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/actions'
+import LazyLoading from './hoc/LazyLoading'
+
+//Lazy Loading
+const lazyAuth = LazyLoading(() =>
+{
+  return import ("./containers/Auth")
+})
+
+const lazyCheckout = LazyLoading(() =>
+{
+  return import ("./containers/Checkout")
+})
+
+const lazyOrders = LazyLoading(() =>
+{
+  return import ("./containers/Orders")
+})
+  
 
 class App extends Component
 {
@@ -35,7 +50,7 @@ class App extends Component
   {
 
     let routes = <Switch>
-      <Route path="/auth" component={Auth} />
+      <Route path="/auth" component={lazyAuth} />
       <Route path="/" exact component={BurgerBuilder} />
       <Redirect to='/' />
     </Switch>
@@ -43,8 +58,8 @@ class App extends Component
     if (this.props.isAuthenticated)
     {
       routes =  <Switch>
-        <Route path="/checkout" component={Checkout} />
-        <Route path="/orders" component={Orders} />
+        <Route path="/checkout" component={lazyCheckout} />
+        <Route path="/orders" component={lazyOrders} />
         <Route path="/logout" component={Logout} />
         <Route path="/" exact component={BurgerBuilder} />
         <Redirect to='/' />

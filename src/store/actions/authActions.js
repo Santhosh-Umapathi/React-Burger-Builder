@@ -88,6 +88,7 @@ export const checkExpiration = (expirationTime) =>
 	}
 }
 
+//Check if logged in already
 export const authCheckState = () =>
 {
 	return dispatch =>

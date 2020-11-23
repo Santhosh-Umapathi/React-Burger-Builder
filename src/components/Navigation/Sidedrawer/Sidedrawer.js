@@ -21,7 +21,7 @@ const Sidedrawer = (props) =>
 		<Aux>
 			<Backdrop show={props.show} clicked={props.backdropHandler}/>
 
-		<div className = {attachedClasses.join(' ')}>
+		<div className = {attachedClasses.join(' ')} onClick = {props.backdropHandler}>
 			<div className = {classes.Logo}>
 				<Logo />
 			</div>
