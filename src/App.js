@@ -22,6 +22,10 @@ const lazyOrders = LazyLoading(() =>
 {
   return import ("./containers/Orders")
 })
+
+console.log("API KEY =>", process.env.REACT_APP_FIREBASE_API_KEY)
+console.log("URL =>", process.env.REACT_APP_FIREBASE_URL)
+
   
 
 class App extends Component
@@ -35,6 +39,10 @@ class App extends Component
   componentDidMount()
   {
     this.props.authCheckState()
+
+   
+    
+    
   }
 
   //Testing cleanup
