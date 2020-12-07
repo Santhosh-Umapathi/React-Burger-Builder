@@ -29,6 +29,7 @@ export const purchaseBurgerStart = () =>
 //Middleware
 export const purchaseBurger = (orderData, token) =>
 {
+	console.log(token)
 	return dispatch =>
 	{
 		dispatch(purchaseBurgerStart())

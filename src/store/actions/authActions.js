@@ -53,9 +53,9 @@ export const authenticate = (email, password, isSignup) =>
 			password: password,
 			returnSecureToken:true
 		}
-		const ApiKey = process.env.REACT_APP_FIREBASE_API_KEY
-		const signUpUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+ApiKey
-		const signInUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + ApiKey
+		const API_KEY = process.env.REACT_APP_FIREBASE_API_KEY
+		const signUpUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+API_KEY
+		const signInUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + API_KEY
 		
 		
 
